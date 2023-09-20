@@ -11,7 +11,7 @@ const timer = (id, deadline) => {
         const t = Date.parse(endtime) - Date.parse(new Date()),
               seconds = Math.floor((t/1000) % 60),
               minutes = Math.floor((t/1000/60) % 60),
-              hours = Math.floor(((t/1000 * 60 * 60) % 24) + 7),
+              hours = Math.floor(((t/1000 * 60 * 60) % 24) + 3),
               days = Math.floor((t/(1000 * 60 * 60 * 24)));
         
         return {
@@ -30,6 +30,8 @@ const timer = (id, deadline) => {
               minutes = timer.querySelector('#minutes'),
               seconds = timer.querySelector('#seconds'),
               timeInterval = setInterval(updateClock, 1000);
+
+        updateClock();
 
         function updateClock() {
             const t = getTimeRemaining(endtime);
