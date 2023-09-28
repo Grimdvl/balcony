@@ -20,13 +20,11 @@ const changeModalState = (state) => {
                 // }
                 switch(item.nodeName) {
                     case 'SPAN':
-                        if (item.nodeName === 'INPUT' && item.value !== '') {
-                            // console.log('span');
-                            state[prop] = i;
-                            break;
-                        } 
+                        // console.log('span');
+                        state[prop] = i;
+                        break;
                     case 'INPUT':
-                        if (item.getAttribute('type') === 'checkbox' && item.checked) {
+                        if (item.getAttribute('type') === 'checkbox') {
                             // console.log('checkbox');
                             i === 0 ? state[prop] = 'cold' : state[prop] = 'warm';
                             elem.forEach((box, j) => {

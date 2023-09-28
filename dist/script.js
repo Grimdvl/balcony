@@ -13867,7 +13867,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active');
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
-  Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline_block');
+  Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])(modalState);
   Object(_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('.container1', deadline);
   Object(_modules_images__WEBPACK_IMPORTED_MODULE_6__["default"])();
@@ -13904,13 +13904,11 @@ const changeModalState = state => {
         // }
         switch (item.nodeName) {
           case 'SPAN':
-            if (item.nodeName === 'INPUT' && item.value !== '') {
-              // console.log('span');
-              state[prop] = i;
-              break;
-            }
+            // console.log('span');
+            state[prop] = i;
+            break;
           case 'INPUT':
-            if (item.getAttribute('type') === 'checkbox' && item.checked) {
+            if (item.getAttribute('type') === 'checkbox') {
               // console.log('checkbox');
               i === 0 ? state[prop] = 'cold' : state[prop] = 'warm';
               elem.forEach((box, j) => {
@@ -14075,16 +14073,32 @@ __webpack_require__.r(__webpack_exports__);
 const modals = () => {
   function bindModal(triggerSelector, modalSelector, closeSelector) {
     let closeClickOverlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    let heightSelector = arguments.length > 4 ? arguments[4] : undefined;
+    let widthSelector = arguments.length > 5 ? arguments[5] : undefined;
+    let checkboxSelector = arguments.length > 6 ? arguments[6] : undefined;
     const trigger = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
       close = modal.querySelector(closeSelector),
       windows = document.querySelectorAll('[data-modal]'),
-      scroll = calcScroll();
+      scroll = calcScroll(),
+      width = document.querySelectorAll(widthSelector),
+      height = document.querySelectorAll(heightSelector),
+      checkbox = document.querySelectorAll(checkboxSelector);
     trigger.forEach(item => {
       item.addEventListener('click', e => {
-        if (e.target && e.target !== '') {
+        if (e.target) {
           e.preventDefault();
         }
+        if (!height.value && !width.value) {
+          console.log('input width & height pls');
+          return;
+        }
+
+        // if (!checkbox.checked) {
+        //     console.log('select warm or cold pls');
+        //     return;
+        // }
+
         windows.forEach(item => {
           item.style.display = 'none';
         });
@@ -14125,7 +14139,7 @@ const modals = () => {
     let div = document.createElement('div');
     div.style.width = '50px';
     div.style.height = '50px';
-    div.style.overlow = 'scroll';
+    div.style.overflow = 'scroll';
     div.style.visibility = 'hidden';
     document.body.appendChild(div);
     let scrollWidth = div.offsetWidth - div.clientWidth;
@@ -14135,8 +14149,8 @@ const modals = () => {
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_close');
   bindModal('.phone_link', '.popup', '.popup .popup_close');
   bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close');
-  bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
-  bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false);
+  bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false, '#height', '#width');
+  bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false, '.checkbox');
   // showModalByTime('.popup', 60000);
 };
 
@@ -14154,7 +14168,7 @@ const modals = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 const tabs = function (headerSelector, tabSelector, contentSelector, activeClass) {
-  let display = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'block';
+  let display = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'inline';
   const header = document.querySelector(headerSelector),
     tab = document.querySelectorAll(tabSelector),
     content = document.querySelectorAll(contentSelector);
@@ -14168,7 +14182,7 @@ const tabs = function (headerSelector, tabSelector, contentSelector, activeClass
   }
   function showTabContent() {
     let i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    content[i].style.display = 'block';
+    content[i].style.display = display;
     tab[i].classList.add(activeClass);
   }
   hideTabContent();
