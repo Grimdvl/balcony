@@ -13904,11 +13904,13 @@ const changeModalState = state => {
         // }
         switch (item.nodeName) {
           case 'SPAN':
-            // console.log('span');
-            state[prop] = i;
-            break;
+            if (item.nodeName === 'INPUT' && item.value !== '') {
+              // console.log('span');
+              state[prop] = i;
+              break;
+            }
           case 'INPUT':
-            if (item.getAttribute('type') === 'checkbox') {
+            if (item.getAttribute('type') === 'checkbox' && item.checked) {
               // console.log('checkbox');
               i === 0 ? state[prop] = 'cold' : state[prop] = 'warm';
               elem.forEach((box, j) => {
@@ -14080,7 +14082,7 @@ const modals = () => {
       scroll = calcScroll();
     trigger.forEach(item => {
       item.addEventListener('click', e => {
-        if (e.target) {
+        if (e.target && e.target !== '') {
           e.preventDefault();
         }
         windows.forEach(item => {

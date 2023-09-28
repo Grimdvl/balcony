@@ -10,14 +10,14 @@ const modals = () => {
 
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
-                if (e.target) {
+                if (e.target && e.target !== '') {
                     e.preventDefault();
                 }
 
                 windows.forEach(item => {
                     item.style.display = 'none';
                 });
-    
+
                 modal.style.display = 'block';
                 // document.body.style.overflow = 'hidde1n';
                 document.body.classList.add('modal-open');
